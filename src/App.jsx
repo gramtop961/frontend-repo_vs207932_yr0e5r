@@ -1,26 +1,30 @@
 import { useState } from 'react'
+import Header from './components/Header'
+import ActionGrid from './components/ActionGrid'
+import BookingForm from './components/BookingForm'
+import CheckInForm from './components/CheckInForm'
+import PatientTracker from './components/PatientTracker'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [view, setView] = useState('home')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-900">
+      <Header onNav={setView} current={view} />
+      <main className="px-6 md:px-10 pb-16">
+        {view === 'home' && (
+          <>
+            <div className="max-w-5xl mx-auto text-center mt-4">
+              <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Self-service hospital kiosk</h2>
+              <p className="text-gray-600 mt-3">Minimal, fast, and touch-friendly. Book appointments, check in on arrival, and track patients in real-time.</p>
+            </div>
+            <ActionGrid onNav={setView} />
+          </>
+        )}
+        {view === 'book' && <BookingForm />}
+        {view === 'checkin' && <CheckInForm />}
+        {view === 'track' && <PatientTracker />}
+      </main>
     </div>
   )
 }
